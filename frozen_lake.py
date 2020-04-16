@@ -50,8 +50,8 @@ for episode in range(num_episodes):
         # Take new action
         new_state, reward, done, info = env.step(action)
         # Update Q-table for Q(s,a)
-        q_table[state, action] = q_table[state, action] * (1 - learning_rate) 
-            + learning_rate * (reward + discount_rate * np.max(q_table[new_state, :]))
+        q_table[state, action] = q_table[state, action] * (1 - learning_rate)
+        + learning_rate * (reward + discount_rate * np.max(q_table[new_state, :]))
         # Set new state
         state = new_state        
         # Add new reward   
@@ -61,7 +61,28 @@ for episode in range(num_episodes):
             break
 
     # Exploration rate decay  
-    exploration_rate = min_exploration_rate + 
-        (max_exploration_rate - min_exploration_rate) * np.exp(-exploration_decay_rate*episode)
+    exploration_rate = min_exploration_rate + (max_exploration_rate - min_exploration_rate) * np.exp(-exploration_decay_rate*episode)
     # Add current episode reward to total rewards list
     rewards_all_episodes.append(rewards_current_episode)
+    
+# Calculate and print the average reward per thousand episodes
+rewards_per_thosand_episodes = np.split(np.array(rewards_all_episodes),num_episodes/1000)
+count = 1000
+
+print("********Average reward per thousand episodes********\n")
+for r in rewards_per_thosand_episodes:
+    print(count, ": ", str(sum(r/1000)))
+    count += 1000
+
+********Average reward per thousand episodes********
+
+1000 :  0.16800000000000012
+2000 :  0.32800000000000024
+3000 :  0.46900000000000036
+4000 :  0.5350000000000004
+5000 :  0.6580000000000005
+6000 :  0.6910000000000005
+7000 :  0.6470000000000005
+8000 :  0.6550000000000005
+9000 :  0.6980000000000005
+10000 :  0.7000000000000005
