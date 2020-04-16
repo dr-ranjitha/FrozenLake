@@ -50,8 +50,7 @@ for episode in range(num_episodes):
         # Take new action
         new_state, reward, done, info = env.step(action)
         # Update Q-table for Q(s,a)
-        q_table[state, action] = q_table[state, action] * (1 - learning_rate)
-        + learning_rate * (reward + discount_rate * np.max(q_table[new_state, :]))
+        q_table[state, action] = q_table[state, action] * (1 - learning_rate) + learning_rate * (reward + discount_rate * np.max(q_table[new_state, :]))
         # Set new state
         state = new_state        
         # Add new reward   
@@ -86,3 +85,7 @@ for r in rewards_per_thosand_episodes:
 8000 :  0.6550000000000005
 9000 :  0.6980000000000005
 10000 :  0.7000000000000005
+
+# Print updated Q-table
+print("\n\n********Q-table********\n")
+print(q_table)
