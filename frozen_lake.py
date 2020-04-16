@@ -64,4 +64,4 @@ for episode in range(num_episodes):
     exploration_rate = min_exploration_rate + 
         (max_exploration_rate - min_exploration_rate) * np.exp(-exploration_decay_rate*episode)
     # Add current episode reward to total rewards list
-
+    rewards_all_episodes.append(rewards_current_episode)
