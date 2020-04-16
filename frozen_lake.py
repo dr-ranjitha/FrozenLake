@@ -42,7 +42,13 @@ for episode in range(num_episodes):
     
     for step in range(max_steps_per_episode): 
         # Exploration-exploitation trade-off
+        exploration_rate_threshold = random.uniform(0, 1)
+        if exploration_rate_threshold > exploration_rate:
+            action = np.argmax(q_table[state,:]) #exploit 
+        else:
+            action = env.action_space.sample() #explore
         # Take new action
+        new_state, reward, done, info = env.step(action)
         # Update Q-table
         # Set new state
         # Add new reward        
