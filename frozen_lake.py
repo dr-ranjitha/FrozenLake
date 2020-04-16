@@ -49,10 +49,19 @@ for episode in range(num_episodes):
             action = env.action_space.sample() #explore
         # Take new action
         new_state, reward, done, info = env.step(action)
-        # Update Q-table
+        # Update Q-table for Q(s,a)
+        q_table[state, action] = q_table[state, action] * (1 - learning_rate) 
+            + learning_rate * (reward + discount_rate * np.max(q_table[new_state, :]))
         # Set new state
-        # Add new reward        
+        state = new_state        
+        # Add new reward   
+        rewards_current_episode += reward
+        
+        if done == True: 
+            break
 
-    # Exploration rate decay   
+    # Exploration rate decay  
+    exploration_rate = min_exploration_rate + 
+        (max_exploration_rate - min_exploration_rate) * np.exp(-exploration_decay_rate*episode)
     # Add current episode reward to total rewards list
 
